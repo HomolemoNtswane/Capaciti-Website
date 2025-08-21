@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAPACITI - Tech Career Accelerator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+        --purple: #102851;
+        --light-purple: #819ED0;
+        --salmon: #F25251;
+        --pink: #F1D1D1;
+    }
+        
+        body {
+        font-family: 'Poppins', sans-serif;
+        scroll-behavior: smooth;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+    }
+        
+        .hero-bg {
+            background: linear-gradient(rgba(16, 40, 97, 0.8), rgba(16, 40, 97, 0.8)), url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .program-card {
+            transition: transform 0.3s ease;
+        }
+        
+        .program-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--light-purple);
+        }
+        
+        .timeline-item:after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 25px;
+            width: 2px;
+            height: calc(100% + 10px);
+            background: var(--light-purple);
+        }
+        
+        .timeline-item:last-child:after {
+            display: none;
+        }
+        
+        .bg-purple {
+        background-color: var(--purple);
+    }
+
+    .bg-light-purple {
+        background-color: var(--light-purple);
+    }
+        
+        .bg-salmon {
+            background-color: var(--salmon);
+        }
+        
+        .bg-pink {
+            background-color: var(--pink);
+        }
+        
+       .text-purple {
+        color: var(--purple);
+    }
+
+    .text-light-purple {
+        color: var(--light-purple);
+    }
+        
+        .text-salmon {
+            color: var(--salmon);
+        }
+        
+        .text-pink {
+            color: var(--pink);
+        }
+        
+        .border-purple {
+            border-color: var(--purple);
+        }
+        
+        .btn-primary {
+            background-color: var(--salmon);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #e04241;
+        }
+        
+        .btn-secondary {
+            background-color: var(--light-purple);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #718ec7;
+        }
+        
+        .font-thin {
+            font-weight: 100;
+        }
+        
+        .font-light {
+            font-weight: 300;
+        }
+        
+        .font-regular {
+            font-weight: 400;
+        }
+        
+        .font-medium {
+            font-weight: 500;
+        }
+        
+        .font-semibold {
+            font-weight: 600;
+        }
+        
+        .font-bold {
+            font-weight: 700;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--purple);
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-md fixed w-full z-50">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+        
+        <!-- Logo Section -->
+        <div class="flex items-center">
+            <!-- Replace 'logo.png' with your actual logo file path -->
+            <img src="logo.jpg" alt="CAPACITI Logo" class="h-10 w-auto">
+            <span class="ml-2 text-xl font-semibold text-purple">CAPACITI</span>
+        </div>
+            
+            <nav class="hidden md:flex space-x-8">
+                <a href="#about" class="text-gray-700 hover:text-purple">About</a>
+                <a href="#programs" class="text-gray-700 hover:text-purple">Programs</a>
+                <a href="#impact" class="text-gray-700 hover:text-purple">Impact</a>
+                <a href="#blog" class="text-gray-700 hover:text-purple">Blog</a>
+                <a href="#contact" class="text-gray-700 hover:text-purple">Contact</a>
+            </nav>
+            
+            <a href="#opportunities" class="btn-primary px-4 py-2 rounded-md font-medium">
+                Work With Us
+            </a>
+            
+            <button class="md:hidden text-gray-700">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-bg text-white pt-32 pb-20">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Tech Career Accelerator</h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+                Building Africa's next generation of digital talent through immersive training and industry connections.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#opportunities" class="btn-primary px-6 py-3 rounded-md font-medium text-lg">
+                    Work With Us
+                </a>
+                <a href="#contact" class="bg-white hover:bg-gray-100 text-purple px-6 py-3 rounded-md font-medium text-lg">
+                    Contact us
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-purple">About CAPACITI</h2>
+            
+            <div class="grid md:grid-cols-2 gap-12 mb-16">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-4 text-purple">Our Mission</h3>
+                    <p class="text-gray-700 mb-6">
+                        CAPACITI is dedicated to closing the digital skills gap in Africa by providing underserved youth with 
+                        access to world-class tech education, mentorship, and employment opportunities.
+                    </p>
+                    
+                    <h3 class="text-2xl font-semibold mb-4 text-purple">Our Vision</h3>
+                    <p class="text-gray-700">
+                        We envision an Africa where every young person has the opportunity to participate in and contribute to 
+                        the digital economy, driving innovation and economic growth across the continent.
+                    </p>
+                </div>
+                
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/T6tDCv623-A?si=H_m22y1JZKzD17kJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            
+            <h3 class="text-2xl font-semibold text-center mb-8 text-purple">Our History</h3>
+            <div class="max-w-4xl mx-auto">
+                <div class="timeline-item">
+                    <h4 class="text-xl font-semibold text-purple">2018</h4>
+                    <p class="text-gray-700">CAPACITI founded as a division of UVU Africa with initial funding from key partners.</p>
+                </div>
+                <div class="timeline-item">
+                    <h4 class="text-xl font-semibold text-purple">2019</h4>
+                    <p class="text-gray-700">Launched first cohort with 50 students in Web Development and Data Science tracks.</p>
+                </div>
+                <div class="timeline-item">
+                    <h4 class="text-xl font-semibold text-purple">2020</h4>
+                    <p class="text-gray-700">Pivoted to virtual learning during pandemic, expanding reach across South Africa.</p>
+                </div>
+                <div class="timeline-item">
+                    <h4 class="text-xl font-semibold text-purple">2021</h4>
+                    <p class="text-gray-700">Graduated 500+ students with 85% placement rate into tech roles.</p>
+                </div>
+                <div class="timeline-item">
+                    <h4 class="text-xl font-semibold text-purple">2022</h4>
+                    <p class="text-gray-700">Expanded programs to include Cybersecurity and Cloud Computing tracks.</p>
+                </div>
+                <div class="timeline-item">
+                    <h4 class="text-xl font-semibold text-purple">2023</h4>
+                    <p class="text-gray-700">Launched initiatives in 3 additional African countries with corporate partners.</p>
+                </div>
+            </div>
+            <h3 class="text-2xl font-semibold text-center mt-16 mb-8 text-purple">
+  Our Board
+</h3>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
+  <!-- Board Member 1 -->
+  <div class="text-center">
+    <img src="Chanel.JPG" alt="Chanel" class="w-40 h-48 object-cover rounded-lg shadow-lg mx-auto border-2 border-purple-500">
+    <h4 class="mt-4 text-lg font-medium">Chanel Oldfield</h4>
+    <p class="text-gray-500">Head of CapaCiTi</p>
+  </div>
+
+  <!-- Board Member 2 -->
+  <div class="text-center">
+    <img src="Kelly.JPG" alt="Kelly" class="w-40 h-48 object-cover rounded-lg shadow-lg mx-auto border-2 border-purple-500">
+    <h4 class="mt-4 text-lg font-medium">Kelly Maroon</h4>
+    <p class="text-gray-500">Head of Talent</p>
+  </div>
+
+  <!-- Board Member 3 -->
+  <div class="text-center">
+    <img src="Nash.JPG" alt="Nash" class="w-40 h-48 object-cover rounded-lg shadow-lg mx-auto border-2 border-purple-500">
+    <h4 class="mt-4 text-lg font-medium">Nasheeta du Toit</h4>
+    <p class="text-gray-500">Head of Brand</p>
+  </div>
+
+  <!-- Board Member 4 -->
+  <div class="text-center">
+    <img src="Chesarae.JPG" alt="Chesarae" class="w-40 h-48 object-cover rounded-lg shadow-lg mx-auto border-2 border-purple-500">
+    <h4 class="mt-4 text-lg font-medium">Chesarae Pillay</h4>
+    <p class="text-gray-500">Head of Partnerships</p>
+  </div>
+</div>
+
+
+            <h3 class="text-2xl font-semibold text-center mt-16 mb-8 text-purple">
+  Our Partners & Funders
+</h3>
+<div class="flex justify-center">
+  <img src="Partners.png" alt="Partners" class="w-3/4 h-auto">
+</div>
+
+
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section id="programs" class="py-16 bg-pink">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-4 text-purple">Our Programs</h2>
+            <p class="text-xl text-center text-gray-700 max-w-3xl mx-auto mb-12">
+                We offer immersive tech training programs designed to launch careers in high-demand digital fields.
+            </p>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="program-card bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Web Development" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-purple">Web Development</h3>
+                        <p class="text-gray-700 mb-4">
+                            Full-stack web development training with modern technologies like JavaScript, React, and Node.js.
+                        </p>
+                        <div class="flex justify-between text-sm text-gray-600">
+                            <span><i class="far fa-clock mr-1"></i> 12 weeks</span>
+                            <span><i class="far fa-user mr-1"></i> 240 graduates</span>
+                        </div>
+<a href="https://uvuafrica.com/programme/" target="_blank">
+    <button class="mt-4 text-light-purple font-medium">
+        Learn more
+    </button>
+</a>
+</div>
+
+                </div>
+                
+                <div class="program-card bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Data Science" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-purple">Data Science</h3>
+                        <p class="text-gray-700 mb-4">
+                            Data analysis, visualization, and machine learning with Python, SQL, and statistical methods.
+                        </p>
+                        <div class="flex justify-between text-sm text-gray-600">
+                            <span><i class="far fa-clock mr-1"></i> 14 weeks</span>
+                            <span><i class="far fa-user mr-1"></i> 180 graduates</span>
+                        </div>
+<a href="https://uvuafrica.com/programme/" target="_blank">
+    <button class="mt-4 text-light-purple font-medium">
+        Learn more
+    </button>
+</a>
+</div>
+
+                </div>
+                
+                <div class="program-card bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Cybersecurity" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-purple">Cybersecurity</h3>
+                        <p class="text-gray-700 mb-4">
+                            Network security, ethical hacking, and threat detection to protect digital assets and infrastructure.
+                        </p>
+                        <div class="flex justify-between text-sm text-gray-600">
+                            <span><i class="far fa-clock mr-1"></i> 16 weeks</span>
+                            <span><i class="far fa-user mr-1"></i> 120 graduates</span>
+                        </div>
+<a href="https://uvuafrica.com/programme/" target="_blank">
+    <button class="mt-4 text-light-purple font-medium">
+        Learn more
+    </button>
+</a>
+</div>
+
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+    <a href="https://capaciti.breezy.hr/" target="_blank">
+        <button class="btn-primary px-6 py-3 rounded-md font-medium">
+            View All Programs
+        </button>
+    </a>
+</div>
+
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section id="impact" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-purple">Our Impact</h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-light-purple mb-2">1000+</div>
+                    <div class="text-gray-700">Graduates Trained</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-light-purple mb-2">85%</div>
+                    <div class="text-gray-700">Employment Rate</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-light-purple mb-2">15</div>
+                    <div class="text-gray-700">Cohorts Completed</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-light-purple mb-2">40%</div>
+                    <div class="text-gray-700">Women Participants</div>
+                </div>
+            </div>
+            
+            <div class="max-w-4xl mx-auto mb-16">
+                <canvas id="impactChart" height="100"></canvas>
+            </div>
+            
+            <h3 class="text-2xl font-semibold text-center mb-8 text-purple">Success Stories</h3>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-pink p-6 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="h-12 w-12 rounded-full bg-light-purple mr-4 flex items-center justify-center text-white font-semibold">LM</div>
+                        <div>
+                            <h4 class="font-semibold text-purple">Lindiwe M.</h4>
+                            <p class="text-sm text-gray-600">Web Development Graduate</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">
+                        "CAPACITI changed my life. After completing the program, I secured a job as a junior developer at a leading tech company."
+                    </p>
+                </div>
+                
+                <div class="bg-pink p-6 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="h-12 w-12 rounded-full bg-light-purple mr-4 flex items-center justify-center text-white font-semibold">TS</div>
+                        <div>
+                            <h4 class="font-semibold text-purple">Thabo S.</h4>
+                            <p class="text-sm text-gray-600">Data Science Graduate</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">
+                        "The practical skills I gained at CAPACITI were exactly what employers were looking for. I had multiple job offers after graduating."
+                    </p>
+                </div>
+                
+                <div class="bg-pink p-6 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="h-12 w-12 rounded-full bg-light-purple mr-4 flex items-center justify-center text-white font-semibold">NK</div>
+                        <div>
+                            <h4 class="font-semibold text-purple">Nomsa K.</h4>
+                            <p class="text-sm text-gray-600">Cybersecurity Graduate</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">
+                        "As a woman in tech, CAPACITI provided me with not just technical skills but also the confidence to excel in a male-dominated field."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="py-16 bg-pink">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-4 text-purple">From Our Blog</h2>
+            <p class="text-xl text-center text-gray-700 max-w-3xl mx-auto mb-12">
+                Insights, updates, and stories from the CAPACITI community.
+            </p>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Blog post" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="text-sm text-light-purple">June 15, 2023</span>
+                        <h3 class="text-xl font-semibold my-2 text-purple">How CAPACITI is Closing the Tech Skills Gap</h3>
+                        <p class="text-gray-700 mb-4">
+                            Exploring our approach to developing industry-relevant digital skills for African youth.
+                        </p>
+                        <a href="https://uvuafrica.com/news/uvu-bio-takes-the-lead-in-transforming-innovation-in-sas-higher-education/" class="text-light-purple font-medium read-more" data-video-id="dQw4w9WgXcQ">Read more</a>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Blog post" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="text-sm text-light-purple">May 28, 2023</span>
+                        <h3 class="text-xl font-semibold my-2 text-purple">Meet Our Latest Graduates</h3>
+                        <p class="text-gray-700 mb-4">
+                            Celebrating the achievements of Cohort 12 as they embark on their tech careers.
+                        </p>
+                        <a href="https://youtu.be/MtIJ-xsGyvw?si=5mzAZl0rzQ3If1gB" class="text-light-purple font-medium read-more" data-video-id="dQw4w9WgXcQ">Read more</a>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Blog post" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="text-sm text-light-purple">April 10, 2023</span>
+                        <h3 class="text-xl font-semibold my-2 text-purple">Partner Spotlight: Tech Company X</h3>
+                        <p class="text-gray-700 mb-4">
+                            How our partnership is creating employment pathways for CAPACITI graduates.
+                        </p>
+                        <a href="https://uvuafrica.com/blog/smmes-need-skilled-tech-talent-to-thrive/" class="text-light-purple font-medium read-more" data-video-id="dQw4w9WgXcQ">Read more</a>
+                    </div>
+                </div>
+            </div>
+            
+    </section>
+
+    <!-- Opportunities Section -->
+    <section id="opportunities" class="py-16 bg-purple text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-6">Work With Us</h2>
+            <p class="text-xl max-w-3xl mx-auto mb-8">
+                Explore opportunities to partner with us, hire our graduates, or apply for our programs.
+            </p>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white text-gray-800 p-6 rounded-lg">
+                    <div class="text-4xl mb-4 text-light-purple">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 text-purple">For Candidates</h3>
+                    <p class="mb-4">Apply to our tech training programs and launch your career in technology.</p>
+                    <a href="#" class="inline-block btn-primary px-4 py-2 rounded-md font-medium">
+                        Apply Now
+                    </a>
+                </div>
+                
+                <div class="bg-white text-gray-800 p-6 rounded-lg">
+                    <div class="text-4xl mb-4 text-light-purple">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 text-purple">For Employers</h3>
+                    <p class="mb-4">Hire our talented graduates for internships and full-time positions.</p>
+                    <a href="#" class="inline-block btn-primary px-4 py-2 rounded-md font-medium">
+                        Hire Talent
+                    </a>
+                </div>
+                
+                <div class="bg-white text-gray-800 p-6 rounded-lg">
+                    <div class="text-4xl mb-4 text-light-purple">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 text-purple">For Partners</h3>
+                    <p class="mb-4">Partner with us to support digital skills development across Africa.</p>
+                    <a href="#" class="inline-block btn-primary px-4 py-2 rounded-md font-medium">
+                        Partner With Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  <!-- Contact Section -->
+<section id="contact" class="py-16 bg-white">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-12 text-purple">Contact Us</h2>
+
+    <div class="grid md:grid-cols-2 gap-12">
+      <!-- Contact Form -->
+      <div>
+        <form id="contact-form" action="https://formspree.io/f/mjkoqnye" method="POST" class="space-y-6">
+          <div>
+            <label for="name" class="block text-gray-700 mb-2">Full Name</label>
+            <input type="text" name="name" id="name" required 
+                   class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-light-purple">
+          </div>
+
+          <div>
+            <label for="email" class="block text-gray-700 mb-2">Email Address</label>
+            <input type="email" name="email" id="email" required 
+                   class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-light-purple">
+          </div>
+
+          <div>
+            <label for="message" class="block text-gray-700 mb-2">Message</label>
+            <textarea name="message" id="message" rows="5" required 
+                      class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-light-purple"></textarea>
+          </div>
+
+          <button type="submit" id="submit-btn" class="btn-primary px-6 py-3 rounded-md font-medium">
+            Send Message
+          </button>
+        </form>
+
+        <!-- Status Message -->
+        <p id="form-status" class="mt-4 text-sm"></p>
+      </div>
+
+      <!-- Contact Info & Socials (unchanged) -->
+      <div>
+        <div class="bg-pink p-6 rounded-lg mb-8">
+          <h3 class="text-xl font-semibold mb-4 text-purple">Contact Information</h3>
+          <div class="space-y-4">
+            <div class="flex items-start">
+              <i class="fas fa-map-marker-alt text-light-purple mt-1 mr-4"></i>
+              <span>19 Ameshoff Road, 13th Floor, Hollard City Campus, Braamfontein, South Africa</span>
+            </div>
+            <div class="flex items-center">
+              <i class="fas fa-phone text-light-purple mr-4"></i>
+              <span>+27 (0) 21 003 7579</span>
+            </div>
+            <div class="flex items-center">
+              <i class="fas fa-envelope text-light-purple mr-4"></i>
+              <span>hello@capaciti.org.za</span>
+            </div>
+            <div class="flex items-center">
+              <i class="fas fa-globe text-light-purple mr-4"></i>
+              <a href="https://uvuafrica.com/capaciti/" target="_blank" class="text-light-purple hover:underline">
+                https://uvuafrica.com/capaciti/
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-pink p-6 rounded-lg">
+          <h3 class="text-xl font-semibold mb-4 text-purple">Follow Us</h3>
+          <div class="flex space-x-4">
+            <a href="https://www.instagram.com/uvuafrica/" class="h-10 w-10 rounded-full bg-light-purple flex items-center justify-center text-white">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.facebook.com/uvuafrica" class="h-10 w-10 rounded-full bg-light-purple flex items-center justify-center text-white">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.linkedin.com/company/capeinnovationandtechnologyinitiative?originalSubdomain=za" class="h-10 w-10 rounded-full bg-light-purple flex items-center justify-center text-white">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://www.instagram.com/uvuafrica/" class="h-10 w-10 rounded-full bg-light-purple flex items-center justify-center text-white">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.youtube.com/channel/UCkPukeyUiKb2LWpFcJZp-iQ" class="h-10 w-10 rounded-full bg-light-purple flex items-center justify-center text-white">
+              <i class="fab fa-youtube"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Formspree Script -->
+<script>
+  const form = document.getElementById("contact-form");
+  const status = document.getElementById("form-status");
+  const button = document.getElementById("submit-btn");
+
+  form.addEventListener("submit", async function(event) {
+    event.preventDefault(); 
+    const data = new FormData(form);
+
+    button.disabled = true;
+    button.innerText = "Sending...";
+
+    try {
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        status.innerHTML = "✅ Your message has been sent successfully!";
+        status.className = "mt-4 text-green-600 text-sm";
+        form.reset();
+      } else {
+        status.innerHTML = "❌ Oops! There was a problem sending your message.";
+        status.className = "mt-4 text-red-600 text-sm";
+      }
+    } catch (error) {
+      status.innerHTML = "❌ Network error. Please try again.";
+      status.className = "mt-4 text-red-600 text-sm";
+    }
+
+    button.disabled = false;
+    button.innerText = "Send Message";
+  });
+</script>
+
+    <!-- Footer -->
+<footer class="bg-purple text-white py-12">
+    <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-4 gap-8">
+            <!-- Logo & Description -->
+            <div>
+    <!-- Logo -->
+    <img src="logo.jpg" alt="CAPACITI Logo" class="h-12 w-auto mb-4">
+    
+    <!-- Description -->
+    <p class="text-gray-100">
+        Building Africa's next generation of digital talent through immersive training and industry connections.
+    </p>
+</div>
+
+
+            <!-- Quick Links -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li><a href="#about" class="text-gray-100 hover:text-white">About Us</a></li>
+                    <li><a href="#programs" class="text-gray-100 hover:text-white">Programs</a></li>
+                    <li><a href="#impact" class="text-gray-100 hover:text-white">Impact</a></li>
+                    <li><a href="#blog" class="text-gray-100 hover:text-white">Blog</a></li>
+                    <li><a href="#contact" class="text-gray-100 hover:text-white">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Programs -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Programs</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-100 hover:text-white">Web Development</a></li>
+                    <li><a href="#" class="text-gray-100 hover:text-white">Data Science</a></li>
+                    <li><a href="#" class="text-gray-100 hover:text-white">Cybersecurity</a></li>
+                    <li><a href="#" class="text-gray-100 hover:text-white">Cloud Computing</a></li>
+                </ul>
+            </div>
+
+            <!-- Newsletter -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Subscribe to Newsletter</h3>
+                <p class="text-gray-100 mb-4">Stay updated with our latest news and opportunities.</p>
+                <form class="flex">
+                    <input type="email" placeholder="Your email" class="px-4 py-2 w-full rounded-l-md focus:outline-none text-gray-800">
+                    <button type="submit" class="bg-light-purple px-4 py-2 rounded-r-md text-white hover:bg-purple-700">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-100">
+            <p>© 2023 CAPACITI. A division of UVU Africa. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        // Impact Chart
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('impactChart').getContext('2d');
+            const impactChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['2019', '2020', '2021', '2022', '2023'],
+                    datasets: [{
+                        label: 'Graduates per year',
+                        data: [50, 150, 300, 400, 500],
+                        backgroundColor: '#819ED0',
+                        borderColor: '#819ED0',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Number of Graduates'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Year'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
